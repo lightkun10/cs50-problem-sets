@@ -3,22 +3,22 @@
 
 int main(void)
 {
-    int height, row, column, hash;
+    int height;
     
   do
   {
     height = get_int("Enter size: ");
   } while (height < 1 || height > 8);
 
-  for (row = 0; row < height; row++)
+  for (int row = 0; row < height; row++)
   { // for row
-    for (column = height - 1; column > row; column--)
+    for (int column = height - 1; column > row; column--)
     {
         // printf("%i", column);
         printf(" ");
     }
 
-    for(hash = -1; hash < row; hash++)
+    for(int hash = -1; hash < row; hash++)
     {
         // printf("%i", hash);
         printf("#");
