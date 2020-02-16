@@ -3,10 +3,8 @@
 
 int main(void)
 {
-    int height;
-    int row;
-    int column;
-    int hash;
+    int height, row, column, hash;
+    
   do
   {
     height = get_int("Enter size: ");
