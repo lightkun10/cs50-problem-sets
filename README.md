@@ -3,3 +3,6 @@
 ### Week 1  - C
 * Mario (less)
 * Cash (less)
+
+### Week 2  - Arrays
+* Readability
