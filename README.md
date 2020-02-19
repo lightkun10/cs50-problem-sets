@@ -6,3 +6,4 @@
 
 ### Week 2  - Arrays
 * Readability
+* Caesar
