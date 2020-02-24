@@ -7,3 +7,6 @@
 ### Week 2  - Arrays
 * Readability
 * Caesar
+
+### Week 3  - Algorithm
+* Plurality
