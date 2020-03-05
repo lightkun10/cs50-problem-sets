@@ -14,3 +14,7 @@
 
 - Plurality
 - Runoff
+
+### Week 4 - Memory
+
+- Filter (less)
