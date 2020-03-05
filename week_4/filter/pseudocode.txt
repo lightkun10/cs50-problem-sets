@@ -1,0 +1,114 @@
+Files:
+- bmp.h     => store the information of bitmap image, some of the structs
+
+- filter.c  => program to actually run the filters, which is going to take care
+               the logic of reading the file from memory, calling a function
+               to apply a filter, writing the new image as a brand-new file
+
+- helpers.h => the header file declare all of the function show up in helpers.c
+
+- Makefile  => the result is going here when execute "make" command
+
+- helpers.c => contains all the functions that are going to implement each of
+               the filter. I AM WORKING MAINLY ON THIS FILE.
+
+g: grayscale, s: sepia, r: reflection, b: blur
+
+======================================================================
+scan image width and height
+    printf("height: %i\nwidth: %i\n\n", height, width);
+
+    printf("Red: %u\n", image[100][500].rgbtRed);
+    printf("Green: %u\n", image[100][500].rgbtGreen);
+    printf("Blue: %u\n", image[100][500].rgbtBlue);
+======================================================================
+
+
+
+====== Grayscale -g ======
+
+To ensure each pixel of the new image still has the same
+general brightness or darkness as the old image, we can
+take the average of the red, green, and blue values to determine
+what shade of grey to make the new pixel.
+
+- iterate through each height/row
+- iterate through each width/column
+- calculate the average color bytes of each row-col
+- change the row-col bytes color to the average
+
+
+
+====== Sepia -s ======
+
+algoriths for converting an image to sepia:
+===================================================================================
+sepiaRed = .393 * originalRed + .769 * originalGreen + .189 * originalBlue
+sepiaGreen = .349 * originalRed + .686 * originalGreen + .168 * originalBlue
+sepiaBlue = .272 * originalRed + .534 * originalGreen + .131 * originalBlue
+===================================================================================
+
+for every row
+    for each column
+        find original red color
+        find original green color
+        find original blue color
+        calculate sepia red
+            if it is more than 255, cap to 255
+        calculate sepia green
+            if it is more than 255, cap to 255
+        calculate sepia blue
+            if it is more than 255, cap to 255
+        assign the sepia red
+        assign the sepia green
+        assign the sepia blue
+
+
+
+====== Reflection -r ======
+- ./filter -r images/courtyard.bmp reflect_courtyard.bmp
+- middle = length(or row) / 2
+- Length of each row of courtyard.bmp: 1800
+- printf("Length of row %i: %lu\n", h, sizeof(image[h]));
+
+
+find the middle of the every row(as "limiter" of each iteration)
+for every row
+    make a variable for counterpart index to swap (start from 1)
+    for every column UNTIL the middle of row
+        swap location on row-col with its counterpart(start from the end)
+        * I can use a custom swap function, passing the location(&) of each col-row
+        increment the counterpart index
+
+
+
+
+====== Blur -b ======
+- ./filter -b images/courtyard.bmp blur_courtyard.bmp
+
+- Find the alternative RGB of each row-col
+for every row
+    for every column
+        check if row above/before is out of bounds
+            yes?
+                skip
+            no?
+                take the row+col rgb
+        check if current row below/after is out of bounds
+            yes?
+                skip
+            no?
+                take the row+col rgb
+        take CURRENT row rgb
+
+        check if column left is out of bounds
+            yes?
+                skip
+            no?
+                take the row+col rgb
+        check if column right is out of bounds
+            yes?
+                skip
+            no?
+                take the row+col rgb
+        take CURRENT column rgb
