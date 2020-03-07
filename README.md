@@ -18,3 +18,4 @@
 ### Week 4 - Memory
 
 - Filter (less)
+- Recover
