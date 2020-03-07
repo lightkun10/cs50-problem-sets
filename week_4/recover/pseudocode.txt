@@ -1,0 +1,26 @@
+TODO(in general)
+1. Open memory card
+2. Look for beginning of JPEG
+3. Open a new JPEG file
+4. Write 512 bytes until new JPEG is found
+5. Stop at end of file
+
+
+
+Open memory card
+Repeat (some process) until end of card
+    Read 512 bytes into a buffer
+    If start of new JPEG
+        If first JPEG
+            start writing "000.jpg",
+            and start writing my very first file
+        Else (already found a JPEG before)
+            close the file I've just writing to
+            so I can open up this new file that I am
+            going to continue writing to
+    Else
+        If already found JPEG
+            keep writing to it
+Close any remaining files
+
+-- fread return number of elements successfully read (blocks)
