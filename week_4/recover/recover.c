@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 #define BLOCK_SIZE 512
 
@@ -8,72 +8,68 @@ typedef uint8_t BYTE;
 
 int main(int argc, char *argv[])
 {
-    // Ensure user ran program with two words at prompt
+    // check usage
     if (argc != 2)
     {
-        printf("Usage: make sure to give a file as argument\n");
+        printf("Handing out a file would be nice...\n");
         return 1;
     }
 
-    // open file(presumably, a memory card)
-    // pointer to inputed data
-    FILE *filesrc = fopen(argv[1], "r");
-    if (filesrc == NULL)
+    // open memory card
+    FILE *raw_file = fopen(argv[1], "r");
+    if (raw_file == NULL)
     {
-        printf("Could not open %s\n", argv[1]);
+        printf("Can't open file: %s\n", argv[1]);
         return 2;
     }
 
-    // place to store file to be read
-    BYTE buffer[512] = {0};
-    // use to be a filename, incremented each file read
+    // store files read
+    BYTE buffer[512];
+    // keep track of image
     int image_count = 0;
     // char to store filename of JPEG
     char filename[10];
-
+    // flag for found jpeg or not
+    bool already_found_jpeg = false;
     // create outfile for jpeg image
     FILE *img = NULL;
 
-    //boolean for start of new jpeg or not
-    bool startjpeg = false;
-
-    // read memory card until end of the card
-    while (true)
+    // repeat until end of card
+    while (!feof(raw_file) && fread(buffer, sizeof(BYTE), BLOCK_SIZE, raw_file) != 0)
     {
-        // read files
-        size_t bytes_read = fread(buffer, sizeof(BYTE), BLOCK_SIZE, filesrc);
-
-        // if end of file and no bytes being read anymore
-        if (feof(filesrc) && bytes_read == 0)
-        {
-            break;
-        }
-
-        // boolean for jpeg header
+        // condition for jpeg header
         bool jpeg_header = buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0;
 
-        // put this at top, so at next iteration, this check first
-        // if start of another jpeg file
-        if (jpeg_header && img != NULL)
+        /* start of a new jpeg? */
+
+        // found new jpeg header and currently writing jpeg file?
+        if (jpeg_header && already_found_jpeg)
         {
+            // initialize start of a new image
+            already_found_jpeg = false;
+            // close previous file
             fclose(img);
+            // increment each new jpeg file
             image_count++;
         }
 
-        // if start of jpeg
-        if (jpeg_header)
+        // new jpeg header?
+        if (jpeg_header && !already_found_jpeg)
         {
+            // start a new file
             sprintf(filename, "%03i.jpg", image_count);
+            // open a new file, include writing permission
             img = fopen(filename, "w");
+            // jpeg already found
+            already_found_jpeg = true;
         }
 
-        // continue write file
-        if (img != NULL)
+        // still in the same jpeg header
+        if (already_found_jpeg)
         {
             fwrite(buffer, sizeof(BYTE), BLOCK_SIZE, img);
         }
     }
 
-    // success
     return 0;
 }
