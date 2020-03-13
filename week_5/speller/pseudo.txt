@@ -1,0 +1,98 @@
+Hash function?
+I may search for (good) hash functions online, 
+so long as I cite the origin of any hash function 
+I integrate into my own code.
+
+=== General todos ===
+In dictionary.c:
+1. Implement load
+2. Implement hash
+3. Implement size
+4. Implement check
+5. Implement unload
+======================
+
+
+
+=== 1. load =====
+TODOS:
+- Open dictionary file
+    - User fopen
+    - Remember to check if return value is NULL
+
+- Read strings from file, 
+  one word in the dictionary at a time
+    - fscanf(file, "%s", word);
+    - repeat this again and again... (Loop?)
+        for each of the words in the dictionary,
+        calling scanf on the file over and over,
+        getting one word at a time
+    - until fscanf return EOF, once it reaches
+        end of file
+
+- Create a new node for each word
+    - make new node to store word inside hash table
+    - use malloc
+    - remember to check if return value(malloc) is NULL
+    - copy word into node using strcpy
+
+- Hash word to obtain a hash value
+    - Use the hash function. The return number can be
+        used to index into my linked list
+    - I can just call upon the hash function inside of load
+        to determine which index into the hash table
+
+- Insert node into hash table at that location
+    - Recall that hash table is an array of linked list
+    - Be sure to set pointers in the correct order!
+
+
+
+=== 2. hash =====
+-- Input: word, with alphabetical characters 
+    and (possibly) apostrophes
+-- Output: numerical index between 0 and N - 1, inclusive
+    N is total number of buckets in my hash table
+-- determininistic
+    If I give it the same input again and again,
+    I should get the same output.
+-- Larger N means more buckets
+-- If my function ends up with a value greater than N,
+    I can take the value >> % N
+    to get a value in the appropriate range
+
+
+
+=== 3. size ====
+-- Return the number of words that are in my dictionary
+
+There are number of ways to do that:
+1. Imagine iterating over every single one
+    of the linked list inside of my hash table,
+    counting the number of nodes inside of each of the
+    linked list. Or,
+2. Imagine that, as I am loading the hash table,
+    I could somehow keep track of the number of words
+    I've added to the dictionary so far so I can return
+    that value in my size function
+
+
+
+=== 4. check ====
+a. Return true if the word is in the dictionary,
+    false otherwise
+b. Case insensitive
+    It shouldn't matter if some of the characters
+    in the word are uppercase or lowercase.
+    My check function should be able to detect whether
+    or not the word is in the dictionary 
+    REGARDLESS of case.
+
+TODO:
+-- Hash word to obtain a hash value
+-- Access linked list at that index in the hash table
+-- Traverse linked list, looking for the word (strcasecmp)
+
+- Start with cursor set to first item in linked list
+- Keep moving cursor until you get to NULL, checking
+    each node for the word
