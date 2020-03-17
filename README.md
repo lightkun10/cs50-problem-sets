@@ -27,3 +27,4 @@
 ### Week 6 - Python
 - Hello
 - Mario
+- Readability
