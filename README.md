@@ -23,3 +23,7 @@
 ### Week 5 - Data Structures
 
 - Speller
+
+### Week 6 - Python
+- Hello
+- Mario
