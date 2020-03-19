@@ -20,13 +20,6 @@ with open(argv[1], "r") as dnafile:
     str_list = next(reader)[1:] # ignore 1st line
     # make a list of dna's holder
     data_list = list(reader)
-    # data_list[0][0] = "I can change each item here"
-
-    ## printing the STR's and list of data
-    # print(str_list) 
-    # THOUGHT: "Hmmm... I can use to this specify what should I scan in the sequence file?"
-
-    # print(data_list)
 
 
 """
@@ -39,13 +32,6 @@ seqfile = seqfile.read().replace("\n", "")
 found_seqs = []
 
 for pattern in str_list:
-    # print(len(pattern))
-    # print(pattern)
-    # print(pattern[1:len(pattern) - 1])
-    # print(seqfile[15:len(pattern)+15])
-    
-    # print(seqfile[itr:len(pattern)+itr])
-
     itr = 0
     repetition = 0
     highest_reps = 0
@@ -64,13 +50,7 @@ for pattern in str_list:
             repetition = 0
             itr += 1
 
-        # itr += 1 # don't delete. To iterate each letter
-
-    # print(highest_reps)
     found_seqs.append(highest_reps)
-
-# print(found_seqs)
-
 
 """
 Open the CSV file
@@ -85,9 +65,6 @@ with open(argv[1], "r") as dnafile:
 
     # Iterate row-by-row
     for row in reader:
-
-        # make a copy of each row
-        # row_cpy = row
 
         # take each name of row
         names = row[0]
