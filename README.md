@@ -29,3 +29,6 @@
 - Mario
 - Readability
 - Dna
+
+### Week 7 - SQL
+- Movies
