@@ -32,3 +32,4 @@
 
 ### Week 7 - SQL
 - Movies
+- Houses
